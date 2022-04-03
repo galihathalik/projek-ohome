@@ -3,29 +3,21 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToMany,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
-export class Book extends BaseEntity {
+export class RefreshToken extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  title: string;
+  isRevoked: boolean;
 
   @Column()
-  author: string;
+  expiredAt: Date;
 
-  @Column()
-  category: string;
-
-  @Column()
-  year: number;
-
-  @ManyToOne(()=> User, (user)=>user.books)
+  @ManyToOne(() => User, (user) => user.refreshTokens)
   user: User;
 }
