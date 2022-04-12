@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { RefreshToken } from 'src/auth/entity/refresh-token.entity';
+import { RefreshToken } from 'src/entities/refresh-token.entity';
 import { Book } from 'src/books/entity/book.entity';
 
 @Entity()

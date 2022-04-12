@@ -1,5 +1,5 @@
 import { InternalServerErrorException } from '@nestjs/common';
-import { User } from 'src/users/entity/user.entity';
+import { User } from 'src/entities/user.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateBookDto } from '../dto/create-book.dto';
 import { FilterBookDto } from '../dto/filter-book.dto';

@@ -14,10 +14,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { filter } from 'rxjs';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { JwtGuard } from 'src/guard/jwt.guard';
-import { UUIDValidationPipe } from 'src/pipe/uuid-validation.pipe';
-import { User } from 'src/users/entity/user.entity';
+import { GetUser } from 'src/modules/main/auth/get-user.decorator';
+import { JwtGuard } from 'src/modules/main/auth/guard/jwt.guard';
+import { UUIDValidationPipe } from 'src/modules/support/pipe/uuid-validation.pipe';
+import { User } from 'src/entities/user.entity';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { FilterBookDto } from './dto/filter-book.dto';
