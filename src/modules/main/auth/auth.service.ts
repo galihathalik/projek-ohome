@@ -14,6 +14,7 @@ import { refreshAccessTokenDTO } from './dto/refresh-access-token.dto';
 import { LoginResponse } from './interface/login-responsive.interface';
 import { RefreshTokenRepository } from './repository/refresh-token.repository';
 import { TokenExpiredError } from 'jsonwebtoken';
+import { retry } from 'rxjs';
 
 @Injectable()
 export class AuthService {
@@ -24,19 +25,56 @@ export class AuthService {
     private readonly refreshTokenRepository: RefreshTokenRepository,
   ) {}
 
-  async login(LoginDto: LoginDto): Promise<LoginResponse> {
-    const { email, password } = LoginDto;
+  async loginAdmin(LoginDto: LoginDto): Promise<LoginResponse> {
+    const { name, email, password } = LoginDto;
 
-    const user = await this.userService.validateuser(email, password);
+    const user = await this.userService.validateUser(name, email, password);
     if (!user) {
-      throw new UnauthorizedException('Wrong email or Password');
+      throw new UnauthorizedException(
+        'username atau email atau password salah',
+      );
+    }
+    if (user.role != `Admin`) {
+      throw new UnauthorizedException('anda tidak memiliki akses');
     }
 
     const access_token = await this.createAccessToken(user);
     const refresh_token = await this.createRefreshToken(user);
-
-    return { access_token, refresh_token } as LoginResponse;
+    const bisa = `berhasil login sebagai admin`;
+    return { access_token, refresh_token, bisa } as LoginResponse;
   }
+
+  async loginPembeli(LoginDto: LoginDto): Promise<LoginResponse> {
+    const { name, email, password } = LoginDto;
+
+    const user = await this.userService.validateUser(name, email, password);
+    if (!user) {
+      throw new UnauthorizedException(
+        'Username atau email atau password Salah',
+      );
+    }
+    if (user.role != `Pembeli`) {
+      throw new UnauthorizedException('anda tidak memiliki akses');
+    }
+    const access_token = await this.createAccessToken(user);
+    const refresh_token = await this.createRefreshToken(user);
+    const berhasil = `berhasil login sebagai pembeli`;
+    return { access_token, refresh_token, berhasil } as LoginResponse;
+  }
+
+  // async login(LoginDto: LoginDto): Promise<LoginResponse> {
+  //   const { email, password } = LoginDto;
+
+  //   const user = await this.userService.validateuser(email, password);
+  //   if (!user) {
+  //     throw new UnauthorizedException('Wrong email or Password');
+  //   }
+
+  //   const access_token = await this.createAccessToken(user);
+  //   const refresh_token = await this.createRefreshToken(user);
+
+  //   return { access_token, refresh_token } as LoginResponse;
+  // }
 
   async refreshAccessToken(
     refreshTokenDto: refreshAccessTokenDTO,

@@ -18,9 +18,14 @@ import { LoginResponse } from './interface/login-responsive.interface';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
-  async login(@Body() LoginDto: LoginDto): Promise<LoginResponse> {
-    return this.authService.login(LoginDto);
+  @Post('login-admin')
+  async loginAdmin(@Body() LoginDto: LoginDto): Promise<LoginResponse> {
+    return this.authService.loginAdmin(LoginDto);
+  }
+
+  @Post('login-pembeli')
+  async loginPembeli(@Body() LoginDto: LoginDto): Promise<LoginResponse> {
+    return this.authService.loginPembeli(LoginDto);
   }
 
   @Post('refresh-token')

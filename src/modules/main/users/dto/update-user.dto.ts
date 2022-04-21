@@ -1,26 +1,22 @@
 import {
   IsEmail,
   isEmail,
-  isNotEmpty,
   IsNotEmpty,
+  isNotEmpty,
   IsOptional,
-  MinLength,
-  minLength,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class udpdateUserDto {
   @IsNotEmpty()
   name: string;
 
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  @MinLength(8)
   password: string;
 
   @IsOptional()
-  @MinLength(11)
+  @IsEmail()
+  email: string;
+
+  @IsOptional()
   num_phone: string;
 }
